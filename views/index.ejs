@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <%- include("./partials/head") %>
+  <body>
+    <div class="app-container">
+      <%- include("./partials/header") %>
+      <main class="app-main">
+        <div>
+          <h1><%= locals.pageTitle %></h1>
+          <p>Welcome to the inventory app, where you can add items to a shop.</p>
+        </div>
+        
+        <section class="main-content">
+          <h2>Total Categories: <%= locals.numCategories %></h2>
+          <h2>Number of Items: <%= locals.numItems %></h2>
+          <h2>Number of Sellers: <%= locals.numSellers %></h2>
+        </section>
+      </main>
+      <%- include("./partials/footer") %>
+    </div>
+  </body>
+</html>

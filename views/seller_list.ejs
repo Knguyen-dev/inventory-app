@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <%- include("./partials/head") %>
+  <body>
+    <div class="app-container">
+      <%- include("./partials/header") %>
+      <main class="app-main">
+        <div>
+          <h1>All Sellers</h1>
+        </div>
+        
+        <section class="main-content">
+          <ul>
+            <% locals.sellers.forEach(function(seller) { %>
+              <li><a href="<%= seller.url %>"><%= seller.name %></a></li>
+            <% }); %>
+          </ul>
+        </section>
+      </main>
+      <%- include("./partials/footer") %>
+    </div>
+  </body>
+</html>

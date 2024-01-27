@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--dark-slate: #0f172a;
+	--medium-slate: #334155;
+	--light-slate: #f1f5f9;
+}
+
+ul,
+li {
+	list-style: none;
+}
+
+body {
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+	color: #00b7ff;
+}
+
+.nav-list {
+	display: flex;
+	column-gap: 1em;
+}
+
+.app-container {
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+}
+
+.app-header,
+.app-footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--dark-slate);
+	color: var(--light-slate);
+	padding: 0.8em 0;
+	font-size: 1.2em;
+}
+
+.app-footer {
+	row-gap: 0.25em;
+}
+
+.app-main {
+	background-color: var(--medium-slate);
+	color: var(--light-slate);
+	padding: 1.5em 2em;
+}
+
+.main-content {
+	margin-top: 1em;
+}

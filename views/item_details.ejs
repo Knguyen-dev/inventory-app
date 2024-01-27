@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <%- include("./partials/head") %>
+  <body>
+    <div class="app-container">
+      <%- include("./partials/header") %>
+      <main class="app-main">
+        <div>
+          <h1>Item Name: <%= locals.item.name %></h1>
+          <p>Category: <a href="<%= locals.item.category.url %>"><%= locals.item.category.name %></a></p>
+          <p>Seller: <a href="<%= locals.item.seller.url %>"><%= locals.item.seller.name %></a></p>
+        </div>
+        
+        <section class="main-content">
+          <p>Item Description: <%= locals.item.description %></p>
+          <p>Price: <%= locals.item.description %></p>
+          <p>Number in stock: <%= locals.item.number_in_stock %></p>
+        </section>
+      </main>
+      <%- include("./partials/footer") %>
+    </div>
+  </body>
+</html>
