@@ -6,18 +6,23 @@
       <%- include("./partials/header") %>
       <main class="app-main">
         <div>
-          <h1><%= locals.category.name %></h1>
-          <p><%= locals.category.description %></p>
+          <h1><%- locals.category.name %></h1>
+          <p><%- locals.category.description %></p>
+
+          <a href="<%= locals.category.update_url %>">Update Category</a>
         </div>
-        
         <section class="main-content">
           <h2>Products:</h2>
           <!-- Display all products within the category -->
-          <ul>
-            <% locals.items.forEach(function(item) { %>
-              <li><a href="<%= item.url %>"><%= item.name %></a></li>
-            <% }); %>
-          </ul>
+          <% if (locals.items.length > 0) { %>
+            <ul>
+              <% locals.items.forEach(function(item) { %>
+                <li><a href="<%= item.url %>"><%- item.name %></a></li>
+              <% }); %>
+            </ul>
+          <% } else { %>
+            <p>No items for this category!</p>
+          <% } %>
         </section>
       </main>
       <%- include("./partials/footer") %>

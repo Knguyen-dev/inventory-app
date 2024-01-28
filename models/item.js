@@ -42,4 +42,8 @@ itemSchema.virtual("url").get(function () {
 	return `/item/${this._id}`;
 });
 
+itemSchema.virtual("update_url").get(function () {
+	return `/item/${this._id}/update`;
+});
+
 module.exports = mongoose.model("Item", itemSchema);

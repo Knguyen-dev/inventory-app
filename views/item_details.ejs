@@ -6,14 +6,16 @@
       <%- include("./partials/header") %>
       <main class="app-main">
         <div>
-          <h1>Item Name: <%= locals.item.name %></h1>
-          <p>Category: <a href="<%= locals.item.category.url %>"><%= locals.item.category.name %></a></p>
-          <p>Seller: <a href="<%= locals.item.seller.url %>"><%= locals.item.seller.name %></a></p>
+          <h1>Item Name: <%- locals.item.name %></h1>
+          <p>Category: <a href="<%= locals.item.category.url %>"><%- locals.item.category.name %></a></p>
+          <p>Seller: <a href="<%= locals.item.seller.url %>"><%- locals.item.seller.name %></a></p>
+          
+          <a href="<%= locals.item.update_url %>">Update Item</a>
         </div>
         
         <section class="main-content">
-          <p>Item Description: <%= locals.item.description %></p>
-          <p>Price: <%= locals.item.description %></p>
+          <p>Item Description: <%- locals.item.description %></p>
+          <p>Price: $<%= locals.item.price %></p>
           <p>Number in stock: <%= locals.item.number_in_stock %></p>
         </section>
       </main>

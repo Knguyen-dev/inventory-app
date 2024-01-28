@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <%- include("./partials/head") %>
+  <body>
+    <div class="app-container">
+      <%- include("./partials/header") %>
+      <main class="app-main">        
+        <h1><%= locals.pageTitle %></h1>
+        
+        <%- include("./partials/category_form") %>
+      </main>
+      <%- include("./partials/footer") %>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<form method="POST">
+  <label for="name">
+    Name:
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      placeholder="Enter item name: "
+      value="<%- locals.seller.name || ""%>" 
+      maxlength="100"
+      required>
+  </label>
+  <label for="description">
+    Description:
+    <textarea 
+      name="description" 
+      id="description"
+      placeholder="Enter item description: " 
+      cols="30" 
+      rows="10" 
+      maxlength="300"
+      ><%- locals.seller.description || ""%></textarea>
+  </label>
+  <button type="submit">Submit</button>
+</form>
+<% if (locals.errors && locals.errors.length > 0) { %>
+    <ul>
+      <% locals.errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+<% } %>

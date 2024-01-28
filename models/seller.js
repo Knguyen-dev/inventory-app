@@ -17,4 +17,8 @@ sellerSchema.virtual("url").get(function () {
 	return `/seller/${this._id}`;
 });
 
+sellerSchema.virtual("update_url").get(function () {
+	return `/seller/${this._id}/update`;
+});
+
 module.exports = mongoose.model("Seller", sellerSchema);

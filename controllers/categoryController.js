@@ -56,3 +56,151 @@ exports.category_details = asyncHandler(async (req, res, next) => {
 		items,
 	});
 });
+
+exports.category_create_get = (req, res) => {
+	res.render("category_create", {
+		pageTitle: "Create a new category!",
+	});
+};
+
+/*
++ Creating a category:
+
++ Validation: 
+- Client side/browser form validation: We have our 
+  client side validation in our markup, such as 'required'
+  or 'maxlength'. This allows for quick validation without 
+  us having to use the backend. However, we also have our 
+  backend server-side validation that acts as a safety net
+  in case the user bypasses or disables the client side validation.
+- How to implement validation:
+1. Look at our schema requirements. Then implement the server-side validation.
+  Then implement the client-side validation. This allows us to be consistent.
+
++ Handling encoding and decoding:
+- Situation: User enters "It's a good day outside.", the ' is 
+  going to be converted into an html entity number, a number or 
+  seequence that represents that character. However we need to 
+  output the original ' symbol, instead of its html entity number.
+  Here's how we can do this and enforce secure application practices:
+1. For input data coming into our backend, we escape it, turning 
+  any characters into HTML entities, which helps prevent any malicious
+  input.
+2. Then when outputting that data, we do <%- %> to output escaped content, 
+  so any html entities are automatically converted back into their human 
+  readable character form.
+
+- validateCategory: Our array of input validation/sanitization middleware.
+  We compartimentalize it into an array and variable, so that we don't have
+  to repeat ourselves everytime.
+*/
+
+const validateCategory = [
+	body("name")
+		.trim()
+		.isLength({ min: 1, max: 100 })
+		.escape()
+		.withMessage("Name can't be empty and at most has 100 characters"),
+
+	body("description")
+		.trim()
+		.isLength({ min: 1, max: 300 })
+		.escape()
+		.withMessage("Description can't be empty and at most has 300 characters"),
+];
+
+exports.category_create_post = [
+	validateCategory,
+
+	asyncHandler(async (req, res, next) => {
+		// Validation and sanitize our data
+		const errors = validationResult(req);
+
+		// Create category model instance
+		const category = new Category({
+			name: req.body.name,
+			description: req.body.description,
+		});
+
+		// If there are errors, re-render the page with the errors
+		if (!errors.isEmpty()) {
+			return res.render("category_create", {
+				pageTitle: "Create a new category!",
+				errors: errors.array(),
+			});
+		}
+
+		// Else no errors, so save the category to the database and redirect
+		// the user to its url.
+		await category.save();
+		res.redirect(category.url);
+	}),
+];
+
+/*
++ Rendering update category form: Gets a category from the database via 
+  it's ID, and renders our form on it. Note that we render
+  the 'category_create' page for updating. The reason is that 
+  we're using this page for creating and updating categories.
+
+1. Ensure the ID is valid. To protect in cases where user manually edits 
+  the id in the url.
+2. Ensure the ID actually found a document, again a safety net for 
+  when the user manually edits the id in the url.
+
+
+*/
+exports.category_update_get = asyncHandler(async (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		const err = new Error("Page not found: Invalid Category ID");
+		err.status = 400;
+		return next(err);
+	}
+	const category = await Category.findById(req.params.id);
+	if (category === null) {
+		const err = new Error("Page not found: Category not found");
+		err.status = 404;
+		return next(err);
+	}
+	res.render("category_create", {
+		pageTitle: "Update a category!",
+		category,
+	});
+});
+
+/*
++ Updating a category:
+
+1. No need to check the id in this case because the ID should be a route parameter.
+  If the user enters a bad route parameter then our category_update_get should 
+  respond with an error, not letting the user access the form. This just ensures 
+  our id is always valid and pointing to an existing thing if we're showing the form
+2. Create a category object with the old id, so that Mongoose doesn't create 
+  a new one. This represents the new category object.
+3. Update it in the database and redirect the user to the url of the category.
+*/
+exports.category_update_post = [
+	validateCategory,
+	asyncHandler(async (req, res) => {
+		const errors = validationResult(req);
+		const category = new Category({
+			_id: req.params.id,
+			name: req.body.name,
+			description: req.body.description,
+		});
+
+		if (!errors.isEmpty()) {
+			return res.render("category_create", {
+				pageTitle: "Update a category!",
+				category,
+				errors: errors.array(),
+			});
+		}
+
+		const updatedCategory = await Category.findByIdAndUpdate(
+			req.params.id,
+			category
+		);
+		res.redirect(updatedCategory.url);
+	}),
+];

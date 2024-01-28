@@ -6,17 +6,22 @@
       <%- include("./partials/header") %>
       <main class="app-main">
         <div>
-          <h1>Seller Name: <%= locals.seller.name %></h1>
-          <p>Description: <%= locals.seller.description %></p>
+          <h1>Seller Name: <%- locals.seller.name %></h1>
+          <p>Description: <%- locals.seller.description %></p>
+          <a href="<%= locals.seller.update_url %>">Update Seller</a>
         </div>
         
         <section class="main-content">
-          <h1>Products they sell:</h1>
-          <ul>
-            <% locals.items.forEach(function(item) { %>
-              <li><a href="<%= item.url %>"><%= item.name %></a></li>
-            <% }); %>
-          </ul>
+          <% if (locals.items.length > 0) { %>
+            <h1>Products they sell:</h1>
+            <ul>
+              <% locals.items.forEach(function(item) { %>
+                <li><a href="<%= item.url %>"><%= item.name %></a></li>
+              <% }); %>
+            </ul>
+          <% } else { %>
+            <h1>Currently no products are being sold by this seller!</h1>
+          <% } %>
         </section>
       </main>
       <%- include("./partials/footer") %>

@@ -9,10 +9,9 @@ A simple inventory application
 
 
 - BOOK MARK: 
+- Adding functionality is done, working on updating functionality
 
-1. Add functionality: Have an add button on every 'list' page. This button leads to a "form"
-    page, where you can add a new item.
-
+1. Add functionality: Have an add button on every 'list' page. This button leads to a "form" page, where you can add a new item.
   - Adding a category should be easy as it shouldn't depend on other models.
   - For adding a item, the user must choose an existing category and an existing
     seller for that item. We 

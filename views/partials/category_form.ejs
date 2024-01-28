@@ -1,0 +1,39 @@
+<form method="POST">
+  <label for="name">
+    Name:
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      placeholder="Enter category name: "
+      value="<%- locals.category ? locals.category.name : ""%>" 
+      maxlength="100"
+      required>
+  </label>
+  <label for="description">
+    Description:
+
+    <!-- Textarea is sensitive to line breaks, as if we did
+    <textarea>
+    </textarea>; the input value would already have spaces. So to avoid
+      this be sure to have no line breaks or extra stuff between your opening
+      and closing tags
+    -->
+    <textarea 
+      name="description" 
+      id="description"
+      placeholder="Enter category description: " 
+      cols="30" 
+      rows="10" 
+      maxlength="300"
+      ><%- locals.category ? locals.category.description : ""%></textarea>
+  </label>
+  <button type="submit">Submit</button>
+</form>
+<% if (locals.errors && locals.errors.length > 0) { %>
+    <ul>
+      <% locals.errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+<% } %>

@@ -1,0 +1,92 @@
+<form method="POST">
+  <label for="name">
+    Name:
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      placeholder="Enter item name: "
+      value="<%- locals.item.name || ""%>" 
+      maxlength="100"
+      required>
+  </label>
+  <label for="description">
+    Description:
+    <textarea 
+      name="description" 
+      id="description"
+      placeholder="Enter item description: " 
+      cols="30" 
+      rows="10" 
+      maxlength="300"
+      ><%- locals.item.description || ""%></textarea>
+  </label>
+
+  <label for="category">Category:</label>
+  <select id="category" name="category"  required>
+    <option value="">--Please select a category--</option>
+    <% locals.categories.forEach(function(category) { %>
+      <!--
+        - if item exists and that item's category has an id that matches the current category:
+          1. Render an option that's selected.
+        - Else: Render the option for the category like normal since it isn't the one
+          we're targeting.
+        -->
+      <% if (locals.item && category._id.toString() === locals.item.category._id.toString()) { %>
+        <option value="<%= category._id %>" selected><%- category.name %></option>
+      <% } else { %>
+        <option value="<%= category._id %>"><%- category.name %></option>
+      <% } %>
+    <% }); %>
+  </select>
+
+  <!--
+  - if item exists and that item's category has an id that matches the current category:
+    1. Render an option that's selected.
+  - Else: Render the option for the category like normal since it isn't the one
+    we're targeting.
+  -->
+  <label for="seller">Seller:</label>
+  <select id="seller" name="seller"  required>
+    <option value="">--Please select a seller--</option>
+    <% locals.sellers.forEach(function(seller) { %>
+      <% if (locals.item && seller._id.toString() === locals.item.seller._id.toString()) { %>
+        <option value="<%= seller._id %>" selected><%- seller.name %></option>
+      <% } else { %>
+        <option value="<%= seller._id %>"><%- seller.name %></option>
+      <% } %>
+    <% }); %>
+  </select>
+
+  <label for="price">
+    Price:
+    <input 
+      type="number" 
+      min="0"
+      id="price" 
+      name="price" 
+      placeholder="Enter item price: "
+      value="<%= locals.item.price || ""%>" 
+      required>
+  </label>
+
+  <label for="number_in_stock">
+    Qty in stock:
+    <input 
+      type="text" 
+      min="0"
+      id="number_in_stock" 
+      name="number_in_stock" 
+      placeholder="Enter number in stock: "
+      value="<%= locals.item.number_in_stock || ""%>" 
+      required>
+  </label>
+  <button type="submit">Submit</button>
+</form>
+<% if (locals.errors && locals.errors.length > 0) { %>
+    <ul>
+      <% locals.errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+<% } %>

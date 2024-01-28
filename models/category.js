@@ -17,4 +17,8 @@ categorySchema.virtual("url").get(function () {
 	return `/category/${this._id}`;
 });
 
+categorySchema.virtual("update_url").get(function () {
+	return `/category/${this._id}/update`;
+});
+
 module.exports = mongoose.model("Category", categorySchema, "categories");
