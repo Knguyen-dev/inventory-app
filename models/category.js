@@ -21,4 +21,9 @@ categorySchema.virtual("update_url").get(function () {
 	return `/category/${this._id}/update`;
 });
 
+categorySchema.virtual("delete_url").get(function () {
+	return `/category/${this._id}/delete`;
+});
+
+
 module.exports = mongoose.model("Category", categorySchema, "categories");

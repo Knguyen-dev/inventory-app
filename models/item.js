@@ -46,4 +46,8 @@ itemSchema.virtual("update_url").get(function () {
 	return `/item/${this._id}/update`;
 });
 
+itemSchema.virtual("delete_url").get(function () {
+	return `/item/${this._id}/delete`;
+});
+
 module.exports = mongoose.model("Item", itemSchema);

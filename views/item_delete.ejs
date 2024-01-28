@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <%- include("./partials/head") %>
+  <body>
+    <div class="app-container">
+      <%- include("./partials/header") %>
+      <main class="app-main">
+        <div>
+          <h1>Delete item '<%- locals.item.name %>'</h1> 
+          <p>Category: <a href="<%= locals.item.category.url %>"><%- locals.item.category.name %></a></p>
+          <p>Seller: <a href="<%= locals.item.seller.url %>"><%- locals.item.seller.name %></a></p> 
+          <p>Description: <%- locals.item.description%></p>
+        </div>
+        
+        <section class="main-content">
+          <form method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </section>
+      </main>
+      <%- include("./partials/footer") %>
+    </div>
+  </body>
+</html>

@@ -6,7 +6,7 @@
       id="name" 
       name="name" 
       placeholder="Enter item name: "
-      value="<%- locals.seller.name || ""%>" 
+      value="<%- locals.seller ? locals.seller.name : ""%>" 
       maxlength="100"
       required>
   </label>
@@ -19,7 +19,7 @@
       cols="30" 
       rows="10" 
       maxlength="300"
-      ><%- locals.seller.description || ""%></textarea>
+      ><%- locals.seller ? locals.seller.description : ""%></textarea>
   </label>
   <button type="submit">Submit</button>
 </form>

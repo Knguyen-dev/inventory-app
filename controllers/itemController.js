@@ -176,3 +176,44 @@ exports.item_update_post = [
 		res.redirect(updatedItem.url);
 	}),
 ];
+
+exports.item_delete_get = asyncHandler(async (req, res) => {
+	// Check validity of route parameter
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		const err = new Error("Page Not Found: Invalid ID for Item");
+		err.status = 400;
+		return next(err);
+	}
+
+	/*
+  + Query database for item: Note that in this case, we couldn't 
+    query for the category or seller directory. This is where populate
+    comes in handle as we have the category and seller id in our item, and 
+    doing populate allows us to quickly and easily get the models for 
+    Category and Seller.
+  */
+	const item = await Item.findById(req.params.id)
+		.populate("category")
+		.populate("seller");
+
+	// Ensure a category was actually found
+	if (item === null) {
+		const err = new Error("Page Not Found: Item not found");
+		err.status = 404;
+		return next(err);
+	}
+
+	// Render the item_delete page
+	res.render("item_delete", {
+		item,
+	});
+});
+
+/*
++ Deleting an item:
+
+*/
+exports.item_delete_post = asyncHandler(async (req, res) => {
+	await Item.findByIdAndDelete(req.params.id);
+	res.redirect("/items");
+});

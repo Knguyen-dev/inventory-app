@@ -21,4 +21,8 @@ sellerSchema.virtual("update_url").get(function () {
 	return `/seller/${this._id}/update`;
 });
 
+sellerSchema.virtual("delete_url").get(function () {
+	return `/seller/${this._id}/delete`;
+});
+
 module.exports = mongoose.model("Seller", sellerSchema);

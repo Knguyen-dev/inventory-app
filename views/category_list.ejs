@@ -13,7 +13,7 @@
         <section class="main-content">
           <ul>
             <% locals.categories.forEach(function(category) { %>
-              <li><a href="<%= category.url %>"><%= category.name %></a></li>
+              <li><a href="<%= category.url %>"><%- category.name %></a></li>
             <% }); %>
           </ul>
         </section>

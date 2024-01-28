@@ -120,3 +120,58 @@ exports.seller_update_post = [
 		res.redirect(updatedSeller.url);
 	}),
 ];
+
+/*
++ Deleting a seller
+
+*/
+
+exports.seller_delete_get = asyncHandler(async (req, res) => {
+	// Check id for seller
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		const err = new Error("Page Not Found: Invalid ID for Seller");
+		err.status = 400;
+		return next(err);
+	}
+
+	const [seller, items] = await Promise.all([
+		Seller.findById(req.params.id),
+		Item.find({ seller: req.params.id }),
+	]);
+
+	// Ensure a seller was actually found
+	if (seller === null) {
+		const err = new Error("Page Not Found: Item not found");
+		err.status = 404;
+		return next(err);
+	}
+
+	// Render the item_delete page
+	res.render("seller_delete", {
+		seller,
+		items,
+	});
+});
+
+exports.seller_delete_post = asyncHandler(async (req, res) => {
+	// route parameter id should be valid and linked to existing document due
+	// to checks in seller_delete_get
+
+	const [seller, items] = await Promise.all([
+		Seller.findById(req.params.id),
+		Item.find({ seller: req.params.id }),
+	]);
+
+	// If there are still items associated with the seller, re-render the seller_delete page
+	if (items.length > 0) {
+		return res.render("seller_delete", {
+			seller,
+			items,
+		});
+	}
+
+	// At this point, no items associated with seller, so delete the seller and
+	// redirect the user back to the page that lists all sellers
+	await Seller.findByIdAndDelete(req.params.id);
+	res.redirect("/sellers");
+});

@@ -7,40 +7,26 @@ A simple inventory application
 3. npm install --save-dev nodemon
 
 
-
-- BOOK MARK: 
-- Adding functionality is done, working on updating functionality
-
-1. Add functionality: Have an add button on every 'list' page. This button leads to a "form" page, where you can add a new item.
-  - Adding a category should be easy as it shouldn't depend on other models.
+# Functionalities
+1. Add functionality: On every 'list' page there's a button leads to a "form" page, where you can add a new item.
+  - Users can add categories without restriction
   - For adding a item, the user must choose an existing category and an existing
-    seller for that item. We 
-  - For adding a seller, it should be easy as it doesn't depend on other models
+    seller for that item. If there no sellers or items, the user has to create them before adding a new item.
+  - Users can add sellers without restriction
 
-2. Update functionality: On Every 'details' page we will have an update button. Where
-  you can update an existing model.
-  - Updating a category should be easy. We shouldn't need to update the info of other 
-    models if we're updating its info because other models only depend on its id.
-  - Updating a product, the user should pick an existing category or seller. 
-  - Updating a seller should be easy as well as we shouldn't have to update the 
-    the info of other objects since others only depend on its object id.
+2. Update functionality: On every 'details' page there's a link that takes the user to the 'update' page. Where they can update an existing model.
+  - Categories can be updated without restriction.
+  - Updating a product, the user must pick an existing category or seller. 
+  - Sellers cna be updated without restriction.
 
-- NOTE: For the forms when adding and updating a model object, we make those reusable components
-  or partials, so that we can reuse htem on the 'add' route and the 'update' route. Now for 
-  adding, the form fields should be empty, but when updating we fill the form fields with the
-  info of the things we are updating.
-
-3. Delete functionality: Keeping it simple, on every 'details' page put a delete button so that we can 
+3. Delete functionality: On every 'details' page put a delete button so that we can 
   delete that individual document. 
-  - To delete a category, ensure all items in that category are deleted, or not using that category.
-  - Deleting an item should be easy, as even when an item is deleted, the category and seller are 
-    still able to exist normally.
-  - To delete a seller, make it so we have to delete all items that a seller is selling, or 
-    switch it off of the seller being deleted.
+  - To delete a category, ensure there are no items associated with that category.
+  - Items can be deleted without restriction.
+  - To delete a seller, there must be no items associated with that seller
 
 
 
 
 # Credits:
-
 1. Inspiration: https://inventory-cat-cafe.fly.dev/inventory

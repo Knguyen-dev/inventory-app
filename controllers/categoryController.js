@@ -204,3 +204,77 @@ exports.category_update_post = [
 		res.redirect(updatedCategory.url);
 	}),
 ];
+
+/*
++ Deleting a category
+
+*/
+exports.category_delete_get = asyncHandler(async (req, res, next) => {
+	// Check validity of route parameter
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		const err = new Error("Page Not Found: Invalid ID for Category");
+		err.status = 400;
+		return next(err);
+	}
+
+	// Fetch for data
+	const [category, items] = await Promise.all([
+		Category.findById(req.params.id),
+		Item.find({
+			category: req.params.id,
+		}),
+	]);
+
+	// Ensure a category was actually found
+	if (category === null) {
+		const err = new Error("Page Not Found: Category not found");
+		err.status = 404;
+		return next(err);
+	}
+
+	// Render corresponding pages
+	res.render("category_delete", {
+		category,
+		items,
+	});
+});
+
+/*
++ Handle deleting a category
+
+1. router parameter ensured to be valid and linked to an existing document due to our 
+  2 conditional checks category_delete_get. Of course this works because the get 
+  and post requests happen at the same route.
+
+2. Fetch category and items. Ensure that there are zero items linked to the
+  category.
+
+- NOTE: Our post handler is pretty easy because we're assuming that our route 
+  handler is getting a route parameter 'id' representing the document id of the 
+  category. However, you can do this differently with input type=hidden, which 
+  is specifically used in situations like these where you want to pass info to
+  the server, that you don't want the user to see. Just note that this is a 
+  
+
+*/
+exports.category_delete_post = asyncHandler(async (req, res) => {
+	const [category, items] = await Promise.all([
+		Category.findById(req.params.id),
+		Item.find({
+			category: req.params.id,
+		}),
+	]);
+
+	// If there are items, stop the process early, and render the category_delete page
+	if (items.length > 0) {
+		return res.render("category_delete", {
+			category,
+			items,
+		});
+	}
+
+	// At this point, no items linked to category, so delete category and redirect
+	// the user back to the category_list page
+	await Category.findByIdAndDelete(req.params.id);
+	res.redirect("/categories");
+});
