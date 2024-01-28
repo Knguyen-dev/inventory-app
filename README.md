@@ -26,7 +26,15 @@ A simple inventory application
   - To delete a seller, there must be no items associated with that seller
 
 
+# Multipart form data:
+- When we upload images and files, we send the data was 'multipart' form data, instead of json.
+  This is why we use the Multer package, which helps handle file uploads from the user
 
+# Gridfs:
+- A driver specification of MongoDB for storing and getting MongoDB files. So
+  you can store files larger than MB. We're not going to be using these here 
+  but they're a good thing to be aware of as they're the solution when storing 
+  user uploaded files to our database.
 
 # Credits:
 1. Inspiration: https://inventory-cat-cafe.fly.dev/inventory
